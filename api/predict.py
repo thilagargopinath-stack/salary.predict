@@ -11,7 +11,20 @@ if BASE_DIR not in sys.path:
 
 from linear_regression import LinearRegression
 
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+# Locate frontend directory
+frontend_candidates = [
+    os.path.join(BASE_DIR, "frontend"),
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "frontend"),
+    os.path.join(os.getcwd(), "frontend"),
+    "frontend"
+]
+
+FRONTEND_DIR = None
+for cand in frontend_candidates:
+    if os.path.exists(cand):
+        FRONTEND_DIR = cand
+        break
+
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
 CORS(app)
 
