@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Salary Predictor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="icon">
+                💼
+            </div>
+
+            <h1>Salary Predictor</h1>
+
+            <p class="subtitle">
+                Predict your approximate salary using Linear Regression
+            </p>
+
+
+            <div class="form-group">
+
+                <label for="experience">
+                    Years of Experience
+                </label>
+
+                <input type="number" id="experience" placeholder="Enter your experience" step="0.1" min="0">
+
+            </div>
+
+
+            <button onclick="predictSalary()">
+                Predict Salary
+            </button>
+
+
+            <div id="result" class="result hidden">
+
+                <p class="result-title">
+                    Estimated Salary
+                </p>
+
+                <h2 id="salary">
+                    ₹0
+                </h2>
+
+                <p id="message"></p>
+
+            </div>
+
+
+            <p class="footer">
+                Powered by your Linear Regression algorithm
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
