@@ -1,7 +1,7 @@
 import os
 import sys
 import csv
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 # Add root directory to sys.path so linear_regression module can be imported
@@ -53,10 +53,12 @@ else:
 
 
 @app.route("/", methods=["GET"])
+@app.route("/index.html", methods=["GET"])
+@app.route("/frontend/index.html", methods=["GET"])
 def home():
     index_file = os.path.join(FRONTEND_DIR, "index.html")
     if os.path.exists(index_file):
-        return app.send_static_file("index.html")
+        return send_from_directory(FRONTEND_DIR, "index.html")
     return jsonify({"message": "Salary Predictor API is running."})
 
 
@@ -116,6 +118,17 @@ def predict():
         "salary": round(predicted_salary, 2),
         "predicted_salary": round(predicted_salary, 2)
     })
+
+
+@app.route("/frontend/<path:filename>", methods=["GET"])
+@app.route("/<path:filename>", methods=["GET"])
+def serve_static(filename):
+    if filename.startswith("api/"):
+        return "Not Found", 404
+    file_path = os.path.join(FRONTEND_DIR, filename)
+    if os.path.exists(file_path):
+        return send_from_directory(FRONTEND_DIR, filename)
+    return "Not Found", 404
 
 
 if __name__ == "__main__":

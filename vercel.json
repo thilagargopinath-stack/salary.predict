@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/predict.py": {
-      "includeFiles": "simple_linear_regression.csv"
+      "includeFiles": "{simple_linear_regression.csv,frontend/**}"
     }
   },
   "rewrites": [
