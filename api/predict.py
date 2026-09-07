@@ -11,7 +11,8 @@ if BASE_DIR not in sys.path:
 
 from linear_regression import LinearRegression
 
-app = Flask(__name__)
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
 CORS(app)
 
 # Locate dataset
@@ -51,9 +52,16 @@ else:
     model = None
 
 
+@app.route("/", methods=["GET"])
+def home():
+    index_file = os.path.join(FRONTEND_DIR, "index.html")
+    if os.path.exists(index_file):
+        return app.send_static_file("index.html")
+    return jsonify({"message": "Salary Predictor API is running."})
+
+
 @app.route("/api/predict", methods=["GET", "POST", "OPTIONS"])
 @app.route("/predict", methods=["GET", "POST", "OPTIONS"])
-@app.route("/", methods=["GET", "POST", "OPTIONS"])
 def predict():
     if request.method == "OPTIONS":
         return "", 204
